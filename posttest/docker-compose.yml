@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  api-lottery:
+    container_name: "api-lottery"
+    depends_on:
+      postgresdb:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgresdb:5432/postgres"
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "Eezc73LFn20kbvywJQsmKOvVG8DNwk"
+    expose:
+      - 8888
+    ports:
+      - "8888:8888"
+    links:
+      - postgresdb
+  postgresdb:
+    image: postgres:16.0
+    environment:
+      POSTGRES_PASSWORD: "Eezc73LFn20kbvywJQsmKOvVG8DNwk"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./db-init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
