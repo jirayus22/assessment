@@ -111,12 +111,13 @@ public class UsersService {
     public UserTicketsEntity buyLotteries(Long userId,Integer ticket){
         checkNotFoundUser(userId);
         TicketEntity findTicket = checkNotFoundTicket(ticket);
+        TicketEntity getTicket = ticketRepository.findFirstByTicket(ticket);
         OrderHistoryMappingEntity orderHistoryMappingEntity = new OrderHistoryMappingEntity();
         Integer getMaxOrderId = orderHistoryMappingRepository.findMaxOrderId();
         Integer orderId = (getMaxOrderId == null) ? 1 : getMaxOrderId;
         orderHistoryMappingEntity.setOrderId(orderId);
         orderHistoryMappingEntity.setUserId(userId);
-        orderHistoryMappingEntity.setTicketId(findTicket.getTicketId());
+        orderHistoryMappingEntity.setTicketId(getTicket.getTicketId());
         orderHistoryMappingEntity.setCreateAt(new Timestamp(System.currentTimeMillis()));
         orderHistoryMappingEntity.setUpdateAt(new Timestamp(System.currentTimeMillis()));
         orderHistoryMappingEntity.setStatusId(1);
@@ -153,7 +154,7 @@ public class UsersService {
         return usersEntity.get();
     }
     public TicketEntity checkNotFoundTicket(Integer ticket){
-        TicketEntity findTicket = ticketRepository.findByTicket(ticket);
+        TicketEntity findTicket = ticketRepository.findFirstByTicket(ticket);
         if(findTicket == null){
             throw new NotFoundException("This ticket is not found : " + ticket);
         }

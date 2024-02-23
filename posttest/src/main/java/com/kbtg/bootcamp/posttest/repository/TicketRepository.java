@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface TicketRepository extends JpaRepository<TicketEntity,Integer> {
 
     TicketEntity findByTicket(Integer ticket);
+
+    TicketEntity findFirstByTicket(Integer ticket);
 }

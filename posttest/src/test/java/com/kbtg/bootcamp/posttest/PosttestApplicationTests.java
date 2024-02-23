@@ -26,7 +26,7 @@ class PosttestApplicationTests {
 	private UsersService usersService;
 
 	@Test
-	void testLotteries() {
+	void testGetAllLotteries() {
 		TicketsDto ticketsDto = new TicketsDto();
 		when(usersService.getAllLotteries()).thenReturn(ticketsDto);
 		ResponseEntity<?> responseEntity = usersController.lotteries();
@@ -35,7 +35,7 @@ class PosttestApplicationTests {
 	}
 
 	@Test
-	void testMyLotteries1() {
+	void testGetListMyLotteries() {
 		Long userId = 1L;
 		TicketsDto expectedTicketsDto = new TicketsDto();
 		when(usersService.getMyLotteries(userId)).thenReturn(expectedTicketsDto);
@@ -44,7 +44,7 @@ class PosttestApplicationTests {
 	}
 
 	@Test
-	void testBuyLotteries2() {
+	void testBuyLotteries() {
 		Long userId = 1L;
 		Integer ticketId = 112233;
 		UserTicketsEntity expectedUserTicketsEntity = new UserTicketsEntity();
@@ -67,7 +67,6 @@ class PosttestApplicationTests {
 
 	@Test
 	void testSellLotteries() {
-		// Arrange
 		Long userId = 1L;
 		Integer ticketId = 2;
 		TicketsDto expectedTicketsDto = new TicketsDto();

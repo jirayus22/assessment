@@ -16,24 +16,22 @@ public class TicketEntity {
     @Column(name = "ticket_id", nullable = false)
     private Integer ticketId;
     @NotNull(message = "Ticket cannot be null")
-    @Min(value = 1, message = "Ticket must be greater than or equal to 1")
-    @Max(value = 999999, message = "Ticket must be less than or equal to 6")
-    @Digits(integer = 6, fraction = 0, message = "Ticket must be a six-digit integer")
+    @DecimalMin(value = "100000", inclusive = true, message = "Please enter a 6-digit number.")
+    @DecimalMax(value = "999999", inclusive = true, message = "Please enter a 6-digit number.")
     @Basic
     @Column(name = "ticket", nullable = false)
     private Integer ticket;
     @NotNull
     @Basic
     @Column(name = "price", nullable = false)
-    @Min(value = 0, message = "Price must be greater than or equal to zero")
+    @Min(value = 0, message = "Price must be greater than or equal to 0")
     @Max(value = 100000, message = "Price must be less than or equal to 100000")
     private Integer price;
     @NotNull
     @Basic
     @Column(name = "amount", nullable = false)
-    @Min(value = 0, message = "Price must be greater than or equal to zero")
-    @Max(value = 100000, message = "Price must be less than or equal to 100000")
-//    @Pattern(regexp = "^[+]?\\d+$",message = "Invalid amount number format.")
+    @Min(value = 1, message = "Amount must be greater than or equal to 1")
+    @Max(value = 100000, message = "Amount must be less than or equal to 100000")
     private Integer amount;
     @Basic
     @Column(name = "create_at", nullable = true)
